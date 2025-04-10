@@ -13,10 +13,6 @@ reasoning_llm = "ollama/gemma3:1b"
 # Planning model, used for `research` agent
 planning_llm = "ollama/gemma3:1b"
 
-[ocr]
-provider = "ollama"
-model = "ollama/gemma3:12b"
-
 [embedding]
 provider = "ollama"
 base_model = "mxbai-embed-large"
