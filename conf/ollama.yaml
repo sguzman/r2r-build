@@ -1,0 +1,56 @@
+[app]
+# LLM used for internal operations, like deriving conversation names
+fast_llm = "ollama/gemma3:1b"
+
+# LLM used for user-facing output, like RAG replies
+quality_llm = "ollama/gemma3:1b"
+
+# LLM used for ingesting visual inputs
+vlm = "ollama/gemma3:1b"
+
+# Reasoning model, used for `research` agent
+reasoning_llm = "ollama/gemma3:1b"
+# Planning model, used for `research` agent
+planning_llm = "ollama/gemma3:1b"
+
+[ocr]
+provider = "ollama"
+model = "ollama/gemma3:12b"
+
+[embedding]
+provider = "ollama"
+base_model = "mxbai-embed-large"
+base_dimension = 1_024
+batch_size = 128
+add_title_as_prefix = true
+concurrent_request_limit = 2
+
+[completion_embedding]
+provider = "ollama"
+base_model = "mxbai-embed-large"
+base_dimension = 1_024
+batch_size = 128
+add_title_as_prefix = true
+concurrent_request_limit = 2
+
+[agent]
+tools = ["search_file_knowledge"]
+
+[graph_creation_settings]
+enabled = true
+graph_extraction_prompt = "graph_get"
+
+
+[completion]
+provider = "litellm"
+concurrent_request_limit = 1
+
+  [completion.generation_config]
+  temperature = 0.1
+  top_p = 1
+  max_tokens_to_sample = 1_024
+  stream = false
+
+
+[orchestration]
+provider = "simple"
