@@ -5,29 +5,30 @@ services:
     image: sciphiai/r2r:latest
     container_name: r2r-server
     environment:
-      - R2R_POSTGRES_USER=${R2R_POSTGRES_USER}
-      - R2R_POSTGRES_PASSWORD=${R2R_POSTGRES_PASSWORD}
+      - R2R_POSTGRES_USER=admin
+      - R2R_POSTGRES_PASSWORD=admin
       - R2R_POSTGRES_HOST=postgres
       - R2R_POSTGRES_PORT=5432
-      - R2R_POSTGRES_DBNAME=${R2R_POSTGRES_DBNAME}
-      - R2R_PROJECT_NAME=${R2R_PROJECT_NAME}
-      - R2R_CONFIG_PATH=${R2R_CONFIG_PATH}
-      - OLLAMA_API_BASE=${OLLAMA_API_BASE}
+      - R2R_POSTGRES_DBNAME=r2rdb
+      - R2R_PROJECT_NAME=r2r
+      - R2R_CONFIG_PATH=/app/user_configs/ollama.conf
+      - OLLAMA_API_BASE=http://ollama:11434
     ports:
       - "8000:8000"
     volumes:
       - ./volumes/r2r:/app/user_configs
     depends_on:
       - postgres
+      - ollama
     restart: always
 
   postgres:
     image: ankane/pgvector:latest
     container_name: r2r-postgres
     environment:
-      - POSTGRES_USER=${R2R_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${R2R_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${R2R_POSTGRES_DBNAME}
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=r2rdb
     ports:
       - "5432:5432"
     volumes:
@@ -43,6 +44,15 @@ services:
       - "7273:3000"
     depends_on:
       - r2r-server
+    restart: always
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./volumes/ollama_data:/root/.ollama
     restart: always
 
 volumes:
