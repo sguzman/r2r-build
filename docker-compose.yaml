@@ -47,6 +47,12 @@ services:
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
     environment:
       - OLLAMA_CONTEXT_LENGTH=32000
     ports:
