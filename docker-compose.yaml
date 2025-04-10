@@ -15,6 +15,7 @@ services:
       - "8000:8000"
     volumes:
       - ./volumes/r2r/ollama.yaml:/ollama.yaml
+      - ./volumes/r2r/graph_get.yaml:/app/core/providers/database/prompts/graph_get.yaml
     depends_on:
       - postgres
       - ollama

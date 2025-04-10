@@ -36,7 +36,6 @@ tools = ["search_file_knowledge"]
 enabled = true
 graph_extraction_prompt = "graph_get"
 
-
 [completion]
 provider = "litellm"
 concurrent_request_limit = 1
